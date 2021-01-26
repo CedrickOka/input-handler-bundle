@@ -1,0 +1,25 @@
+{
+	"name" : "coka/input-handler-bundle",
+	"type" : "symfony-bundle",
+	"license" : "MIT",
+	"keywords" : [
+		"input",
+		"validation",
+		"content",
+		"negotiation"
+	],
+	"autoload" : {
+		"psr-4" : {
+			"Oka\\InputHandlerBundle\\" : "src"
+		}
+	},
+	"require" : {
+		"php" : ">=7.2",
+		"doctrine/annotations": "^1.11",
+		"symfony/http-kernel" : "^4.4 || ^5.0",
+		"symfony/dependency-injection" : "^4.4 || ^5.0",
+		"symfony/serializer-pack" : "^1.0",
+		"symfony/translation" : "^4.4 || ^5.0",
+		"symfony/validator" : "^4.4 || ^5.0"
+	}
+}
