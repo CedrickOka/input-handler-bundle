@@ -15,7 +15,7 @@ Installation is a quick (I promise!) 3 step process:
 
 1. Download OkaInputHandlerBundle
 2. Register the Bundle
-3. Configure the Bundle
+3. Use bundle and enjoy!
 
 ### Step 1: Download the Bundle
 
@@ -42,21 +42,35 @@ return [
 ]
 ```
 
-### Step 3: Configure the Bundle
+### Step 3: Use the bundle is simple
 
-Add the following configuration to your `config/packages/oka_input_handler.yaml`.
+Now that the bundle is installed. 
 
-``` yaml
-# config/packages/oka_input_handler.yaml
-oka_input_handler:
-    exception:
-        enabled: true
-    response:
-	     headers:
-	         server_time: true
-	     error_builder_class: 'Oka\InputHandlerBundle\Util\ErrorResponseBuilder'
+```php
+// App\Controller\FooController.php
+
+use App\Entity\Foo;
+
+//...
+
+/**
+ * @Route("/foo/create", methods="GET", name="app_foo_create")
+ * @AccessControl(version="v1", protocol="rest", formats="json")
+ * @RequestContent(constraints="createConstraints")
+ */
+public function create(Request $request, $version, $protocol, array $requestContent) :Response
+{
+	//...
+	$foo = new Foo();
+	$foo->setName($requestContent['name']);
+	$foo->setDescription($requestContent['description']);
+}
+
+private static function createConstraints() :Assert\Collection
+{
+	return new Assert\Collection([
+		'name' => new Assert\Required(new Assert\NotBlank()),
+		'description' => new Assert\Required(new Assert\NotBlank()),
+	]);
+}
 ```
-
-## How use this?
-
-Now that the bundle is installed
