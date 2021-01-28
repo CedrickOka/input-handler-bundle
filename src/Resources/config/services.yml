@@ -3,3 +3,10 @@ services:
         arguments: ['@annotations.cached_reader', '@validator', '@serializer', '@translator']
         tags:
           - {name: kernel.event_listener, event: kernel.controller, method: onKernelController}
+
+    oka_input_handler.error_response.factory:
+        public: true
+        class: Oka\InputHandlerBundle\Service\ErrorResponseFactory
+        arguments: ['@request_stack', '@serializer']
+
+    Oka\InputHandlerBundle\Service\ErrorResponseFactory: '@oka_input_handler.error_response.factory'
