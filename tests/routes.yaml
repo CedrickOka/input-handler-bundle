@@ -1,0 +1,3 @@
+index:
+    path: /{version}/{protocol}
+    controller: Oka\InputHandlerBundle\Test\Controller\AppController

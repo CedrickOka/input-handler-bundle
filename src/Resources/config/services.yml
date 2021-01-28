@@ -1,5 +1,5 @@
 services:
     Oka\InputHandlerBundle\EventListener\AnnotationListener:
-        arguments: ['@annotations.cached_reader', '@validator', '@translator']
+        arguments: ['@annotations.cached_reader', '@validator', '@serializer', '@translator']
         tags:
           - {name: kernel.event_listener, event: kernel.controller, method: onKernelController}

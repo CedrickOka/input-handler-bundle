@@ -29,18 +29,6 @@ final class RequestUtil
 		return trim(rawurldecode($query));
 	}
 	
-	public static function getFirstAcceptableFormat(Request $request, string $defaultFormat = null):? string
-	{
-		$format = null;
-		$acceptableContentTypes = $request->getAcceptableContentTypes();
-		
-		if (false === empty($acceptableContentTypes)) {
-			$format = $request->getFormat($acceptableContentTypes[0]);
-		}
-		
-		return $format ?? $defaultFormat;
-	}
-	
 	public static function getContentFromFormat(Request $request, string $format)
 	{
 		switch ($format) {
