@@ -13,7 +13,7 @@
 			"Oka\\InputHandlerBundle\\" : "src"
 		},
 		"exclude-from-classmap" : [
-			"/src/Test/", 
+			"/src/Test/",
 			"/tests/"
 		]
 	},
@@ -23,14 +23,14 @@
 		}
 	},
 	"require" : {
-		"php": ">=7.2",
-		"doctrine/annotations": "^1.11",
-		"doctrine/cache": "^1.10",
-		"symfony/dependency-injection": "^4.4 || ^5.0",
-		"symfony/http-kernel": "^4.4 || ^5.0",
-		"symfony/serializer-pack": "^1.0",
-		"symfony/translation": "^4.4 || ^5.0",
-		"symfony/validator": "^4.4 || ^5.0"
+		"php" : ">=7.2",
+		"doctrine/annotations" : "^1.11",
+		"doctrine/cache" : "^1.10",
+		"symfony/dependency-injection" : "^4.4 || ^5.0",
+		"symfony/http-kernel" : "^4.4 || ^5.0",
+		"symfony/serializer-pack" : "^1.0",
+		"symfony/translation" : "^4.4 || ^5.0",
+		"symfony/validator" : "^4.4 || ^5.0"
 	},
 	"require-dev" : {
 		"symfony/browser-kit" : "4.4.*",
@@ -50,6 +50,6 @@
 		}
 	},
 	"support" : {
-		"docs" : "https://github.com/CedrickOka/pagination-bundle/blob/master/src/Resources/doc/index.md"
+		"docs" : "https://github.com/CedrickOka/input-handler-bundle/blob/master/src/Resources/doc/index.md"
 	}
 }
