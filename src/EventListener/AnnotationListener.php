@@ -16,6 +16,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * 
@@ -176,7 +177,7 @@ class AnnotationListener
 					throw new BadRequestHttpException($message);
 				}
 				
-				return new Response($this->serializer->serialize($errors, 'json', ['title' => $message]), 400, ['Content-Type' => 'application']);
+				return new JsonResponse($this->serializer->serialize($errors, 'json', ['title' => $message]), 400, [], true);
 			});
 			$event->stopPropagation();
 		}

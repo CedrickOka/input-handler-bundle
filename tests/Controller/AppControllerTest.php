@@ -1,5 +1,5 @@
 <?php
-namespace App\Tests\Controller;
+namespace Oka\InputHandlerBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -39,6 +39,7 @@ class AppControllerTest extends WebTestCase
 	    ], '{"email": "johndoe", "password": "johndoe@password"}');
 	    
 	    $this->assertResponseStatusCodeSame(406);
+	    $this->assertResponseHeaderSame('Content-Type', 'application/xml');
 	}
 	
 	/**
@@ -53,6 +54,7 @@ class AppControllerTest extends WebTestCase
 	    $content = json_decode($client->getResponse()->getContent(), true);
 	    
 	    $this->assertResponseStatusCodeSame(400);
+	    $this->assertResponseHeaderSame('Content-Type', 'application/json');
 	    $this->assertEquals('[email]', $content['violations'][0]['propertyPath']);
 	}
 }

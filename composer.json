@@ -13,7 +13,6 @@
 			"Oka\\InputHandlerBundle\\" : "src"
 		},
 		"exclude-from-classmap" : [
-			"/src/Test/",
 			"/tests/"
 		]
 	},
