@@ -13,10 +13,9 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * 
@@ -170,14 +169,15 @@ class AnnotationListener
 		if (false === $validationHasFailed) {
 			$request->attributes->set('requestContent', $requestContent);
 		} else {
-			$event->setController(function() use ($annotation, $errors) {
+		    $event->setController(function(Request $request) use ($annotation, $errors) {
 				$message = $this->translator->trans($annotation->getValidationErrorMessage(), $annotation->getTranslationParameters(), $annotation->getTranslationDomain());
 				
 				if (!$errors instanceof ConstraintViolationListInterface) {
 					throw new BadRequestHttpException($message);
 				}
+				$format = $request->getRequestFormat('json');
 				
-				return new JsonResponse($this->serializer->serialize($errors, 'json', ['title' => $message]), 400, [], true);
+				return new Response($this->serializer->serialize($errors, $format, ['title' => $message]), 400, ['Content-Type' => $request->getMimeType($format)]);
 			});
 			$event->stopPropagation();
 		}

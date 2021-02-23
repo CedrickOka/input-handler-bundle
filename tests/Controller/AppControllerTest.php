@@ -39,7 +39,7 @@ class AppControllerTest extends WebTestCase
 	    ], '{"email": "johndoe", "password": "johndoe@password"}');
 	    
 	    $this->assertResponseStatusCodeSame(406);
-	    $this->assertResponseHeaderSame('Content-Type', 'application/xml');
+	    $this->assertResponseHeaderSame('Content-Type', 'text/xml; charset=UTF-8');
 	}
 	
 	/**
