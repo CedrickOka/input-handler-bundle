@@ -48,7 +48,7 @@ final class RequestUtil
 		}
 	}
 	
-	public static function getContent(Request $request): array
+	public static function getContent(Request $request):? array
 	{
 		switch ($request->getContentType()) {
 			case 'json':
