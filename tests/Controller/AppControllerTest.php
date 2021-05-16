@@ -51,10 +51,23 @@ class AppControllerTest extends WebTestCase
 	    $client->request('POST', '/v1/rest', [], [], [
 	        'CONTENT_TYPE' => 'application/json',
 	    ], '{"email": "johndoe", "password": "johndoe@password"}');
-	    $content = json_decode($client->getResponse()->getContent(), true);
+		$content = json_decode($client->getResponse()->getContent(), true);
 	    
 	    $this->assertResponseStatusCodeSame(400);
 	    $this->assertResponseHeaderSame('Content-Type', 'application/json');
 	    $this->assertEquals('[email]', $content['violations'][0]['propertyPath']);
+	}
+	
+	/**
+	 * @covers
+	 */
+	public function testThatProblemNormalizerIsOverride()
+	{
+	    $client = static::createClient();
+	    $client->request('GET', '/v1/rest', [], [], ['HTTP_Accept' => 'application/json']);
+		$content = json_decode($client->getResponse()->getContent(), true);
+	    
+	    $this->assertResponseStatusCodeSame(405);
+	    $this->assertEquals('Method Not Allowed', $content['title']);
 	}
 }

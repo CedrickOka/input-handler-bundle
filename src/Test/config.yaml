@@ -24,3 +24,7 @@ framework:
     router:
         resource: routes.yaml
         utf8: true
+
+oka_input_handler:
+    error_handler:
+        override_problem_normalizer: true

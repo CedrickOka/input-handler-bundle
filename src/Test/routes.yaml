@@ -1,3 +1,4 @@
 index:
+    methods: ['POST']
     path: /{version}/{protocol}
     controller: Oka\InputHandlerBundle\Test\Controller\AppController

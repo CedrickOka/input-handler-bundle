@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * 
+ *
  * @author Cedrick Oka Baidai <okacedrick@gmail.com>
  *
  */
@@ -35,4 +35,3 @@ class AppController extends AbstractController
         ]);
     }
 }
-
