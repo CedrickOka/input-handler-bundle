@@ -11,9 +11,10 @@ use Symfony\Component\Serializer\Normalizer\ProblemNormalizer as BaseProblemNorm
  */
 class ProblemNormalizer extends BaseProblemNormalizer
 {
-    public function normalize($object, string $format = null, array $context = [])
+    public function normalize($object, $format = null, array $context = [])
     {
         $data = parent::normalize($object, $format, $context);
+        
         $data['title'] = $object->getStatusText();
         $data['detail'] = $object->getMessage();
 
