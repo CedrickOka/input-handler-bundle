@@ -2,6 +2,7 @@
 
 namespace Oka\InputHandlerBundle\DependencyInjection;
 
+use Oka\InputHandlerBundle\EventListener\RequestFormatListener;
 use Oka\InputHandlerBundle\Serializer\Normalizer\ProblemNormalizer;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,8 +26,13 @@ class OkaInputHandlerExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         
+        if (null !== $config['error_handler']['default_request_format']) {
+            $requestFormatListenerDefinition = $container->setDefinition('oka_input_handler.request_format_listener', new Definition(RequestFormatListener::class, [$config['error_handler']['default_request_format']]));
+            $requestFormatListenerDefinition->addTag('kernel.event_listener', ['event' => 'kernel.exception', 'method' => 'onKernelException', 'priority' => 255]);
+        }
+        
         if (true === $config['error_handler']['override_problem_normalizer']) {
-            $problemNormalizerDefinition = $container->setDefinition(ProblemNormalizer::class, new Definition(ProblemNormalizer::class, [new Parameter('kernel.debug')]));
+            $problemNormalizerDefinition = $container->setDefinition('oka_input_handler.problem_normalizer', new Definition(ProblemNormalizer::class, [new Parameter('kernel.debug')]));
             $problemNormalizerDefinition->addTag('serializer.normalizer', ['priority' => 255]);
         }
     }

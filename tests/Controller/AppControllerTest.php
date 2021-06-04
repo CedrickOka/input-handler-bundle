@@ -16,7 +16,7 @@ class AppControllerTest extends WebTestCase
 	public function testIndex()
 	{
 	    $client = static::createClient();
-	    $client->request('POST', '/v1/rest', [], [], [
+	    $client->request('POST', '/v1/rest/app', [], [], [
 	        'CONTENT_TYPE' => 'application/json',
 	    ], '{"email": "johndoe@exemple.com", "password": "johndoe@password"}');
 		$content = json_decode($client->getResponse()->getContent(), true);
@@ -33,13 +33,14 @@ class AppControllerTest extends WebTestCase
 	public function testThatRequestIsNoAcceptable()
 	{
 	    $client = static::createClient();
-	    $client->request('POST', '/v1/rest', [], [], [
+	    $client->request('POST', '/v1/rest/app', [], [], [
 	        'CONTENT_TYPE' => 'application/json',
 	        'HTTP_Accept' => 'application/xml',
 	    ], '{"email": "johndoe", "password": "johndoe@password"}');
 	    
 	    $this->assertResponseStatusCodeSame(406);
-	    $this->assertResponseHeaderSame('Content-Type', 'text/xml; charset=UTF-8');
+	    $this->assertResponseHeaderSame('Content-Type', 'application/json');
+	    // $this->assertResponseHeaderSame('Content-Type', 'text/xml; charset=UTF-8');
 	}
 	
 	/**
@@ -48,7 +49,7 @@ class AppControllerTest extends WebTestCase
 	public function testThatRequestIsNoValid()
 	{
 	    $client = static::createClient();
-	    $client->request('POST', '/v1/rest', [], [], [
+	    $client->request('POST', '/v1/rest/app', [], [], [
 	        'CONTENT_TYPE' => 'application/json',
 	    ], '{"email": "johndoe", "password": "johndoe@password"}');
 		$content = json_decode($client->getResponse()->getContent(), true);
@@ -64,7 +65,7 @@ class AppControllerTest extends WebTestCase
 	public function testThatProblemNormalizerIsOverride()
 	{
 	    $client = static::createClient();
-	    $client->request('GET', '/v1/rest', [], [], ['HTTP_Accept' => 'application/json']);
+	    $client->request('GET', '/v1/rest/app', [], [], ['HTTP_Accept' => 'application/json']);
 		$content = json_decode($client->getResponse()->getContent(), true);
 	    
 	    $this->assertResponseStatusCodeSame(405);

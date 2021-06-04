@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('error_handler')
                     ->addDefaultsIfNotSet()
                     ->children()
+                        ->scalarNode('default_request_format')->defaultNull()->end()
                         ->booleanNode('override_problem_normalizer')->defaultTrue()->end()
                     ->end()
                 ->end()

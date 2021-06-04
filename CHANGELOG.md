@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+#### 1.3.0 (2021-06-04)
+
+* [Configuration] Added new configuration value `oka_input_handler.error_handler.default_request_format`.
+
 #### 1.2.0 (2021-05-16)
 
 * [Configuration] Added new configuration value `oka_input_handler.error_handler.override_problem_normalizer`.
