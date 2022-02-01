@@ -20,6 +20,7 @@ use Doctrine\Common\Annotations\Annotation\Target;
  *  @Attribute("violation", type="array", required=false),
  *  @Attribute("can_be_empty", type="boolean", required=false),
  *  @Attribute("validation_disabled", type="boolean", required=false)
+ *  @Attribute("enable_validation", type="boolean", required=false)
  * })
  */
 final class RequestContent
@@ -72,7 +73,7 @@ final class RequestContent
         $this->fieldsAlias = $data['fields_alias'] ?? [];
         $this->constraints = $data['constraints'] ?? null;
         $this->canBeEmpty = (bool) ($data['can_be_empty'] ?? false);
-        $this->validationDisabled = (bool) ($data['validation_disabled'] ?? false);
+        $this->validationDisabled = (bool) ($data['validation_disabled'] ?? $data['enable_validation'] ?? false);
         $this->violation = array_merge([
             'message' => 'request.format.invalid',
             'domain' => 'OkaInputHandlerBundle',
