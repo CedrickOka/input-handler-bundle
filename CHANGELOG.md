@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+#### 1.4.0 (2021-09-29)
+
+* Reorganized project structure.
+
 #### 1.3.0 (2021-06-04)
 
 * [Configuration] Added new configuration value `oka_input_handler.error_handler.default_request_format`.

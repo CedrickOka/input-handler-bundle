@@ -4,132 +4,137 @@ namespace Oka\InputHandlerBundle\Annotation;
 
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Annotations\Annotation\Attribute;
+use Doctrine\Common\Annotations\Annotation\Attributes;
 use Doctrine\Common\Annotations\Annotation\Target;
 
 /**
- *
  * @author Cedrick Oka Baidai <okacedrick@gmail.com>
  *
  * @Annotation
  * @Target("METHOD")
+ * @Attributes({
+ *  @Attribute("formats", type="array", required=false),
+ *  @Attribute("target", type="string", required=false),
+ *  @Attribute("fields_alias", type="array", required=false),
+ *  @Attribute("constraints", type="string", required=false),
+ *  @Attribute("violation", type="array", required=false),
+ *  @Attribute("can_be_empty", type="boolean", required=false),
+ *  @Attribute("validation_disabled", type="boolean", required=false)
+ * })
  */
 final class RequestContent
 {
     /**
      * Content type list
-     * Available values are: `form`, `json`, `xml`
+     * Available values are: `form`, `json`, `xml`.
      *
-     * @Attribute(name="formats", type="array", required=false)
-     * @var array $formats
+     * @var array
      */
     private $formats;
-    
+
     /**
-     * @Attribute(name="constraints", type="string", required=false)
-     * @var string $constraints
+     * @var string
+     */
+    private $target;
+
+    /**
+     * @var array
+     */
+    private $fieldsAlias;
+
+    /**
+     * @var string
      */
     private $constraints;
-    
+
     /**
-     * @Attribute(name="can_be_empty", type="boolean", required=false)
-     * @var boolean $canBeEmpty
+     * @var array
+     */
+    private $violation;
+
+    /**
+     * @var bool
      */
     private $canBeEmpty;
-    
+
     /**
-     * @Attribute(name="enable_validation", type="boolean", required=false)
-     * @var boolean $enableValidation
+     * @var bool
      */
-    private $enableValidation;
-    
+    private $validationDisabled;
+
     /**
-     * @Attribute(name="validation_error_message", type="string", required=false)
-     * @var string $validationErrorMessage
-     */
-    private $validationErrorMessage;
-    
-    /**
-     * @Attribute(name="translation", type="array", required=false)
-     * @var array $translation
-     */
-    private $translation;
-    
-    /**
-     * @var string $translationDomain
-     */
-    private $translationDomain;
-    
-    /**
-     * @var string $translationParameters
-     */
-    private $translationParameters;
-    
-    /**
-     * @param array $data
      * @throws \InvalidArgumentException
      */
     public function __construct(array $data)
     {
+        $this->formats = $data['formats'] ?? [];
+        $this->target = $data['target'] ?? null;
+        $this->fieldsAlias = $data['fields_alias'] ?? [];
         $this->constraints = $data['constraints'] ?? null;
         $this->canBeEmpty = (bool) ($data['can_be_empty'] ?? false);
-        $this->enableValidation = (bool) ($data['enable_validation'] ?? true);
-        
-        if (null === $this->constraints && true === $this->enableValidation) {
-            throw new \InvalidArgumentException('You must define a "constraints" attribute for each @RequestContent annotation while request validation is enabled.');
+        $this->validationDisabled = (bool) ($data['validation_disabled'] ?? false);
+        $this->violation = array_merge([
+            'message' => 'request.format.invalid',
+            'domain' => 'OkaInputHandlerBundle',
+            'parameters' => [],
+        ], $data['violation'] ?? []);
+
+        if (null === $this->target && null === $this->constraints && false === $this->validationDisabled) {
+            throw new \InvalidArgumentException('You must define "target" or "constraints" attributes for each @RequestContent annotation while request validation is enabled.');
         }
-        
-        if (false === isset($data['translation'])) {
-            $this->translationParameters = [];
-            $this->translationDomain = 'OkaInputHandlerBundle';
-        } else {
-            $this->translationParameters = $data['translation']['parameters'] ?? [];
-            $this->translationDomain = (string) ($data['translation']['domain'] ?? 'OkaInputHandlerBundle');
-            
-            if (false === is_array($this->translationParameters)) {
-                throw new \InvalidArgumentException('You must define a "constraints" attribute for each @RequestContent annotation while request validation is enabled.');
-            }
+
+        if ($diff = array_diff(array_keys($this->violation), ['message', 'parameters', 'domain'])) {
+            throw new \InvalidArgumentException(sprintf('The following configuration are not supported "%s" for "violation" attribute for each @RequestContent annotation while request validation is enabled.', implode(', ', $diff)));
         }
-        
-        $this->formats = $data['formats'] ?? [];
-        $this->validationErrorMessage = (string) ($data['validation_error_message'] ?? 'request.format.invalid');
-        
+
         if (false === is_array($this->formats)) {
             $this->formats = [$this->formats];
         }
     }
-    
+
     public function getFormats(): array
     {
         return $this->formats;
     }
-    
-    public function getConstraints():? string
+
+    public function getTarget(): ?string
+    {
+        return $this->target;
+    }
+
+    public function getFieldsAlias(): array
+    {
+        return $this->fieldsAlias;
+    }
+
+    public function getConstraints(): ?string
     {
         return $this->constraints;
     }
-    
-    public function isCanBeEmpty():bool
+
+    public function getViolation(): array
+    {
+        return $this->violation;
+    }
+
+    public function isCanBeEmpty(): bool
     {
         return $this->canBeEmpty;
     }
-    
-    public function isEnableValidation(): bool
+
+    public function isValidationDisabled(): bool
     {
-        return $this->enableValidation;
+        return $this->validationDisabled;
     }
-    
-    public function getValidationErrorMessage(): string
+
+    public function getTargetAttributeName(): ?string
     {
-        return $this->validationErrorMessage;
-    }
-    
-    public function getTranslationDomain(): string
-    {
-        return $this->translationDomain;
-    }
-    
-    public function getTranslationParameters(): array
-    {
-        return $this->translationParameters;
+        $attributeName = null;
+
+        if (null !== $this->target && false !== ($pos = strripos($this->target, '\\'))) {
+            $attributeName = strtolower(trim(substr($this->target, $pos + 1)));
+        }
+
+        return $attributeName;
     }
 }

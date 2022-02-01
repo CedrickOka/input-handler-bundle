@@ -1,12 +1,11 @@
 <?php
+
 namespace Oka\InputHandlerBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
 /**
- *
  * @author Cedrick Oka Baidai <okacedrick@gmail.com>
- *
  */
 class RequestFormatListener
 {
@@ -16,19 +15,19 @@ class RequestFormatListener
     {
         $this->defaultFormat = $defaultFormat;
     }
-    
+
     public function onKernelException(ExceptionEvent $event)
     {
         if (false === $event->isMasterRequest()) {
             return;
         }
-        
+
         $request = $event->getRequest();
-        
+
         if (null !== $request->getRequestFormat(null)) {
             return;
         }
-        
-        $event->getRequest()->setRequestFormat($this->defaultFormat);
+
+        $request->setRequestFormat($this->defaultFormat);
     }
 }

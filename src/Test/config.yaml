@@ -1,3 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Oka\InputHandlerBundle\Test\EventListener\KernelControllerListener:
+        tags:
+          - {name: kernel.event_subscriber}
+
+    Oka\InputHandlerBundle\Test\Controller\AppController:
+        tags: ['controller.service_arguments']
+
 framework:
     test: true
     secret: 'secret'
@@ -22,7 +34,7 @@ framework:
         # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
         #app: cache.adapter.apcu
     router:
-        resource: routes.yaml
+        resource: '%kernel.project_dir%/src/Test/routes.yaml'
         utf8: true
 
 oka_input_handler:

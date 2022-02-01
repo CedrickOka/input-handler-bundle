@@ -1,20 +1,18 @@
 <?php
 
-namespace Oka\InputHandlerBundle\Serializer\Normalizer;
+namespace Oka\InputHandlerBundle\Normalizer;
 
 use Symfony\Component\Serializer\Normalizer\ProblemNormalizer as BaseProblemNormalizer;
 
 /**
- *
- * @author Cedrick Oka Baidai <cedric.baidai@veone.net>
- *
+ * @author Cedrick Oka Baidai <okacedrick@gmail.com>
  */
 class ProblemNormalizer extends BaseProblemNormalizer
 {
     public function normalize($object, $format = null, array $context = [])
     {
         $data = parent::normalize($object, $format, $context);
-        
+
         $data['title'] = $object->getStatusText();
         $data['detail'] = $object->getMessage();
 

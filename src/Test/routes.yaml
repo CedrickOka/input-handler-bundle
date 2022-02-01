@@ -1,4 +1,14 @@
-index:
+check:
     methods: ['POST']
-    path: /{version}/{protocol}/app
-    controller: Oka\InputHandlerBundle\Test\Controller\AppController
+    path: /{version}/{protocol}/check
+    controller: Oka\InputHandlerBundle\Test\Controller\AppController::check
+
+create:
+    methods: ['POST']
+    path: /{version}/{protocol}/create
+    controller: Oka\InputHandlerBundle\Test\Controller\AppController::create
+
+update:
+    methods: ['POST']
+    path: /{version}/{protocol}/update
+    controller: Oka\InputHandlerBundle\Test\Controller\AppController::update
