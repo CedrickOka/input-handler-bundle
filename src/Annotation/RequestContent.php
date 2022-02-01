@@ -19,7 +19,7 @@ use Doctrine\Common\Annotations\Annotation\Target;
  *  @Attribute("constraints", type="string", required=false),
  *  @Attribute("violation", type="array", required=false),
  *  @Attribute("can_be_empty", type="boolean", required=false),
- *  @Attribute("validation_disabled", type="boolean", required=false)
+ *  @Attribute("validation_disabled", type="boolean", required=false),
  *  @Attribute("enable_validation", type="boolean", required=false)
  * })
  */
