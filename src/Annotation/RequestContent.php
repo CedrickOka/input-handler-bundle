@@ -73,7 +73,7 @@ final class RequestContent
         $this->fieldsAlias = $data['fields_alias'] ?? [];
         $this->constraints = $data['constraints'] ?? null;
         $this->canBeEmpty = (bool) ($data['can_be_empty'] ?? false);
-        $this->validationDisabled = (bool) ($data['validation_disabled'] ?? $data['enable_validation'] ?? false);
+        $this->validationDisabled = (bool) (true === isset($data['enable_validation']) ? !$data['enable_validation'] : $data['validation_disabled'] ?? false);
         $this->violation = array_merge([
             'message' => 'request.format.invalid',
             'domain' => 'OkaInputHandlerBundle',
