@@ -131,11 +131,9 @@ class AnnotationListener
             $requestContent = RequestUtil::getContentFromFormat($request, $format ?? $request->getRequestFormat('json'));
         }
 
-        if (null === ($target = $annotation->getTarget())) {
-            $target = $requestContent;
-        } else {
+        if (null !== ($target = $annotation->getTarget())) {
             switch (true) {
-                case class_exists($annotation->getTarget()):
+                case class_exists($target):
                     $target = new $target();
                     break;
 
@@ -153,13 +151,15 @@ class AnnotationListener
             foreach ($requestContent as $propertyPath => $value) {
                 $propertyAccessor->setValue($target, $fieldsAlias[$propertyPath] ?? $propertyPath, $value);
             }
+
+            $requestContent = $target;
         }
 
         $errors = null;
         $validationHasFailed = !$annotation->isCanBeEmpty();
 
         // Input validation
-        if (false === $annotation->isValidationDisabled() && $target) {
+        if (false === $annotation->isValidationDisabled() && $requestContent) {
             if (null !== $constraints = $annotation->getConstraints()) {
                 if (!$reflectionMethod = $this->createReflectionMethod($event->getController(), $constraints)) {
                     throw new \LogicException(sprintf('Invalid option(s) passed to @%s: Constraints method "%s" is not exist.', get_class($annotation), $constraints));
@@ -177,12 +177,12 @@ class AnnotationListener
                 $constraints = $reflectionMethod->invoke(null);
             }
 
-            $errors = $this->validator->validate($target, $constraints);
+            $errors = $this->validator->validate($requestContent, $constraints);
             $validationHasFailed = $errors->count() > 0;
         }
 
         if (false === $validationHasFailed) {
-            $request->attributes->set($annotation->getTargetAttributeName() ?? 'requestContent', $target);
+            $request->attributes->set($annotation->getTargetAttributeName() ?? 'requestContent', $requestContent ?? []);
         } else {
             $event->setController(function (Request $request) use ($annotation, $errors) {
                 $violation = $annotation->getViolation();
