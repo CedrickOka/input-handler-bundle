@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+#### 1.4.5 (2022-04-15)
+
+* Fixed request content retrieving.
+
 #### 1.4.0 (2021-09-29)
 
 * Reorganized project structure.

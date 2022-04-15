@@ -79,7 +79,7 @@ class AnnotationListener
             break;
         }
 
-        if (true === empty($request->getAcceptableContentTypes()) || (null === $request->getRequestFormat(null) && true === in_array('*/*', $request->getAcceptableContentTypes(), true))) {
+        if (null === $request->getRequestFormat(null) && true === in_array('*/*', $request->getAcceptableContentTypes(), true)) {
             $request->setRequestFormat($annotation->getFormats()[0]);
         }
 
@@ -128,7 +128,7 @@ class AnnotationListener
                 $format = $annotation->getFormats()[$key];
             }
 
-            $requestContent = RequestUtil::getContentFromFormat($request, $format ?? $request->getRequestFormat('json'));
+            $requestContent = RequestUtil::getContentFromFormat($request, $format ?? $request->getContentType());
         }
 
         if (null !== ($target = $annotation->getTarget())) {
