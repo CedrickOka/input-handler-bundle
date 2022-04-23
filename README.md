@@ -9,7 +9,7 @@ This bundle help the user input high quality data into your web services REST.
 [![License](https://poser.pugx.org/coka/input-handler-bundle/license)](https://packagist.org/packages/coka/input-handler-bundle)
 [![Monthly Downloads](https://poser.pugx.org/coka/input-handler-bundle/d/monthly)](https://packagist.org/packages/coka/input-handler-bundle)
 [![Daily Downloads](https://poser.pugx.org/coka/input-handler-bundle/d/daily)](https://packagist.org/packages/coka/input-handler-bundle)
-[![Travis CI](https://travis-ci.org/CedrickOka/input-handler-bundle.svg?branch=master)](https://travis-ci.org/CedrickOka/input-handler-bundle)
+[![Travis CI](https://travis-ci.com/CedrickOka/input-handler-bundle.svg?branch=master)](https://travis-ci.org/CedrickOka/input-handler-bundle)
 
 Installation
 ============

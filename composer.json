@@ -2,6 +2,8 @@
 	"name" : "coka/input-handler-bundle",
 	"type" : "symfony-bundle",
 	"license" : "MIT",
+	"description" : "Validator custom constraint",
+	"homepage" : "https://github.com/CedrickOka/input-handler-bundle",
 	"keywords" : [
 		"input",
 		"validation",
@@ -59,6 +61,6 @@
 		}
 	},
 	"support" : {
-		"docs" : "https://github.com/CedrickOka/input-handler-bundle/blob/master/src/Resources/doc/index.md"
+		"docs" : "https://github.com/CedrickOka/input-handler-bundle/blob/master/docs/index.md"
 	}
 }
