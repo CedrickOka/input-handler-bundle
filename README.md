@@ -1,3 +1,16 @@
+OkaInputHandlerBundle
+=====================
+
+This bundle help the user input high quality data into your web services REST.
+
+[![Latest Stable Version](https://poser.pugx.org/coka/input-handler-bundle/v/stable)](https://packagist.org/packages/coka/input-handler-bundle)
+[![Total Downloads](https://poser.pugx.org/coka/input-handler-bundle/downloads)](https://packagist.org/packages/coka/input-handler-bundle)
+[![Latest Unstable Version](https://poser.pugx.org/coka/input-handler-bundle/v/unstable)](https://packagist.org/packages/coka/input-handler-bundle)
+[![License](https://poser.pugx.org/coka/input-handler-bundle/license)](https://packagist.org/packages/coka/input-handler-bundle)
+[![Monthly Downloads](https://poser.pugx.org/coka/input-handler-bundle/d/monthly)](https://packagist.org/packages/coka/input-handler-bundle)
+[![Daily Downloads](https://poser.pugx.org/coka/input-handler-bundle/d/daily)](https://packagist.org/packages/coka/input-handler-bundle)
+[![Travis CI](https://travis-ci.org/CedrickOka/input-handler-bundle.svg?branch=master)](https://travis-ci.org/CedrickOka/input-handler-bundle)
+
 Installation
 ============
 

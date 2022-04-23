@@ -15,9 +15,17 @@ class AppControllerTest extends WebTestCase
     public function testCheck()
     {
         $client = static::createClient();
-        $client->request('POST', '/v1/rest/check', [], [], [
-            'CONTENT_TYPE' => 'application/json',
-        ], '{"email": "johndoe@exemple.com", "password": "johndoe@password"}');
+        $client->request(
+            'POST',
+            '/v1/rest/check',
+            [],
+            [],
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_ACCEPT' => 'application/json',
+            ],
+            '{"email": "johndoe@exemple.com", "password": "johndoe@password"}'
+        );
         $content = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertResponseStatusCodeSame(200);
@@ -33,9 +41,16 @@ class AppControllerTest extends WebTestCase
     public function testCreate()
     {
         $client = static::createClient();
-        $client->request('POST', '/v1/rest/create', [], [], [
-            'CONTENT_TYPE' => 'application/json',
-        ], '{"email": "johndoe@exemple.com", "password": "johndoe@password"}');
+        $client->request(
+            'POST',
+            '/v1/rest/create',
+            [],
+            [],
+            [
+                'CONTENT_TYPE' => 'application/json',
+            ],
+            '{"email": "johndoe@exemple.com", "password": "johndoe@password"}'
+        );
         $content = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertResponseStatusCodeSame(200);
@@ -51,10 +66,17 @@ class AppControllerTest extends WebTestCase
     public function testUpdate()
     {
         $client = static::createClient();
-        $client->request('POST', '/v1/rest/update', [], [], [
-            'CONTENT_TYPE' => 'application/json',
-            'CONTENT_Accept' => 'application/json',
-        ], '{"email": "johndoe@exemple.com", "password": "johndoe@password"}');
+        $client->request(
+            'POST',
+            '/v1/rest/update',
+            [],
+            [],
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'CONTENT_Accept' => 'application/json',
+            ],
+            '{"email": "johndoe@exemple.com", "password": "johndoe@password"}'
+        );
         $content = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertResponseStatusCodeSame(200);
@@ -70,10 +92,17 @@ class AppControllerTest extends WebTestCase
     public function testThatRequestIsNoAcceptable()
     {
         $client = static::createClient();
-        $client->request('POST', '/v1/rest/check', [], [], [
-            'CONTENT_TYPE' => 'application/json',
-            'HTTP_ACCEPT' => 'application/xml',
-        ], '{"email": "johndoe@password.ci", "password": "johndoe@password"}');
+        $client->request(
+            'POST',
+            '/v1/rest/check',
+            [],
+            [],
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_ACCEPT' => 'application/xml',
+            ],
+            '{"email": "johndoe@password.ci", "password": "johndoe@password"}'
+        );
 
         $this->assertResponseStatusCodeSame(406);
         $this->assertResponseHeaderSame('Content-Type', 'application/json');
@@ -86,10 +115,17 @@ class AppControllerTest extends WebTestCase
     public function testThatRequestIsNoValid()
     {
         $client = static::createClient();
-        $client->request('POST', '/v1/rest/check', [], [], [
-            'CONTENT_TYPE' => 'application/json',
-            'HTTP_ACCEPT' => 'application/json',
-        ], '{"email": "johndoe", "password": "johndoe@password"}');
+        $client->request(
+            'POST',
+            '/v1/rest/check',
+            [],
+            [],
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_ACCEPT' => 'application/json',
+            ],
+            '{"email": "johndoe", "password": "johndoe@password"}'
+        );
         $content = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertResponseStatusCodeSame(400);

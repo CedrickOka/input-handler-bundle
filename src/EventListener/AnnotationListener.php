@@ -79,7 +79,7 @@ class AnnotationListener
             break;
         }
 
-        if (null === $request->getRequestFormat(null) && true === in_array('*/*', $request->getAcceptableContentTypes(), true)) {
+        if (null === $request->getRequestFormat(null) && (true === empty($request->getAcceptableContentTypes()) || true === in_array('*/*', $request->getAcceptableContentTypes(), true))) {
             $request->setRequestFormat($annotation->getFormats()[0]);
         }
 

@@ -1,8 +1,7 @@
 services:
     oka_input_handler.request_listener:
         class: Oka\InputHandlerBundle\EventListener\RequestListener
-        arguments:
-          - []
+        arguments: [[]]
         tags:
           - {name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 255}
 

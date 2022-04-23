@@ -15,7 +15,7 @@
 	],
 	"autoload" : {
 		"psr-4" : {
-			"Oka\\InputHandlerBundle\\" : "src"
+			"Oka\\InputHandlerBundle\\" : "src/"
 		},
 		"exclude-from-classmap" : [
 			"/tests/"
@@ -27,7 +27,7 @@
 		}
 	},
 	"require" : {
-		"php" : ">=7.2",
+		"php" : ">=7.4",
 		"doctrine/annotations" : "^1.11",
 		"doctrine/cache" : "^1.10",
 		"symfony/dependency-injection" : "^4.4 || ^5.4",
@@ -38,10 +38,11 @@
 		"symfony/validator" : "^4.4 || ^5.4"
 	},
 	"require-dev" : {
-		"symfony/browser-kit" : "4.4.* || 5.4.*",
-		"symfony/framework-bundle" : "4.4.* || 5.4.*",
-		"symfony/phpunit-bridge" : "4.4.* || 5.4.*",
-		"symfony/yaml" : "4.4.* || 5.4.*"
+		"friendsofphp/php-cs-fixer" : "^3",
+		"symfony/browser-kit" : "^4.4 || ^5.4",
+		"symfony/framework-bundle" : "^4.4 || ^5.4",
+		"symfony/phpunit-bridge" : "^4.4 || ^5.4",
+		"symfony/yaml" : "^4.4 || ^5.4"
 	},
 	"config" : {
 		"sort-packages" : true

@@ -1,6 +1,6 @@
 <?php
 
-namespace Oka\InputHandlerBundle\Test;
+namespace Oka\InputHandlerBundle\Tests;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;

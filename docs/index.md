@@ -6,7 +6,7 @@ This bundle help the user input high quality data into your web services REST.
 
 The OkaInputHandlerBundle has the following requirements:
 
- - PHP 7.2+
+ - PHP 7.4+
  - Symfony 4.4+
 
 ## Installation

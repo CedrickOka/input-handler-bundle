@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+#### 1.4.6 (2022-04-23)
+
+* Sanitize project.
+
 #### 1.4.5 (2022-04-15)
 
 * Fixed request content retrieving.
