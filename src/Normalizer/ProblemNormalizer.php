@@ -9,6 +9,13 @@ use Symfony\Component\Serializer\Normalizer\ProblemNormalizer as BaseProblemNorm
  */
 class ProblemNormalizer extends BaseProblemNormalizer
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @see \Symfony\Component\Serializer\Normalizer\ProblemNormalizer::normalize()
+     *
+     * @return array
+     */
     public function normalize($object, $format = null, array $context = [])
     {
         $data = parent::normalize($object, $format, $context);

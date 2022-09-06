@@ -111,6 +111,7 @@ class AnnotationListener
     private function onRequestContentAnnotation(ControllerEvent $event, RequestContent $annotation)
     {
         $request = $event->getRequest();
+        $requestContent = null;
 
         if (true === $request->isMethodCacheable()) {
             $requestContent = $request->query->all();
@@ -125,10 +126,10 @@ class AnnotationListener
                     return;
                 }
 
-                $format = $annotation->getFormats()[$key];
+                $requestContent = RequestUtil::getContentFromFormat($request, $annotation->getFormats()[$key]);
+            } elseif (null !== $request->getContentType()) {
+                $requestContent = RequestUtil::getContentFromFormat($request, $request->getContentType());
             }
-
-            $requestContent = RequestUtil::getContentFromFormat($request, $format ?? $request->getContentType());
         }
 
         if (null !== ($target = $annotation->getTarget())) {
@@ -181,7 +182,7 @@ class AnnotationListener
             $validationHasFailed = $errors->count() > 0;
         }
 
-        if (false === $validationHasFailed) {
+        if (false === $validationHasFailed || true === $annotation->isValidationDisabled()) {
             $request->attributes->set($annotation->getTargetAttributeName() ?? 'requestContent', $requestContent ?? []);
         } else {
             $event->setController(function (Request $request) use ($annotation, $errors) {
