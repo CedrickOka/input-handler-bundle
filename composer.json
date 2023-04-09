@@ -29,15 +29,15 @@
 		}
 	},
 	"require" : {
-		"php" : ">=7.4",
-		"doctrine/annotations" : "^1.11",
-		"doctrine/cache" : "^1.10",
-		"symfony/dependency-injection" : "^4.4 || ^5.4",
-		"symfony/http-kernel" : "^4.4 || ^5.4",
-		"symfony/property-access" : "^4.4 || ^5.4",
-		"symfony/serializer" : "^4.4 || ^5.4",
-		"symfony/translation" : "^4.4 || ^5.4",
-		"symfony/validator" : "^4.4 || ^5.4"
+		"php": ">=7.4",
+		"doctrine/annotations": "^1.11",
+		"doctrine/cache": "^2.2",
+		"symfony/dependency-injection": "^4.4 || ^5.4",
+		"symfony/http-kernel": "^4.4 || ^5.4",
+		"symfony/property-access": "^4.4 || ^5.4",
+		"symfony/serializer": "^4.4 || ^5.4",
+		"symfony/translation": "^4.4 || ^5.4",
+		"symfony/validator": "^4.4 || ^5.4"
 	},
 	"require-dev" : {
 		"friendsofphp/php-cs-fixer" : "^3",
