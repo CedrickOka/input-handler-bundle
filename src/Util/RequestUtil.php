@@ -37,7 +37,7 @@ final class RequestUtil
                 return simplexml_load_string($request->getContent(), true);
 
             case 'form':
-                return array_merge($request->request->all(), $request->files->all());
+                return array_merge_recursive($request->request->all(), $request->files->all());
 
             default:
                 return null;
