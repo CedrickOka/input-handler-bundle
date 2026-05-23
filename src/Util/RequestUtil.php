@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 final class RequestUtil
 {
-    public static function parseQueryStringToArray(Request $request, string $key, string $delimiter = null, $defaultValue = null): array
+    public static function parseQueryStringToArray(Request $request, string $key, ?string $delimiter = null, $defaultValue = null): array
     {
         $value = $request->query->get($key, $defaultValue);
 

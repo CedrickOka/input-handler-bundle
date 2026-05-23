@@ -1,21 +1,9 @@
-services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-
-    Oka\InputHandlerBundle\Test\EventListener\KernelControllerListener:
-        tags:
-          - {name: kernel.event_subscriber}
-
-    Oka\InputHandlerBundle\Test\Controller\AppController:
-        tags: ['controller.service_arguments']
-
 framework:
     test: true
     secret: 'secret'
     default_locale: 'fr'
     session:
-        storage_id: session.storage.mock_file
+        storage_factory_id: session.storage.factory.mock_file
     php_errors:
         log: true
 
@@ -41,3 +29,11 @@ oka_input_handler:
     error_handler:
         default_request_format: 'json'
         override_problem_normalizer: true
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Oka\InputHandlerBundle\Test\Controller\AppController:
+        tags: ['controller.service_arguments']

@@ -2,7 +2,6 @@
 
 namespace Oka\InputHandlerBundle\EventListener;
 
-use Doctrine\Common\Annotations\Reader;
 use Oka\InputHandlerBundle\Annotation\AccessControl;
 use Oka\InputHandlerBundle\Annotation\RequestContent;
 use Oka\InputHandlerBundle\Util\RequestUtil;
@@ -12,7 +11,6 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -21,28 +19,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * @author Cedrick Oka Baidai <okacedrick@gmail.com>
  */
-class AnnotationListener
+class AttributeListener
 {
-    private $reader;
-    private $validator;
-    private $serializer;
-    private $translator;
-
-    public function __construct(Reader $reader, ValidatorInterface $validator, SerializerInterface $serializer, TranslatorInterface $translator)
+    public function __construct(private ValidatorInterface $validator, private SerializerInterface $serializer, private TranslatorInterface $translator)
     {
-        $this->reader = $reader;
-        $this->validator = $validator;
-        $this->serializer = $serializer;
-        $this->translator = $translator;
     }
 
-    public function onKernelController(ControllerEvent $event)
+    public function onKernelController(ControllerEvent $eventArgs)
     {
-        if (false === $event->isMasterRequest()) {
+        if (false === $eventArgs->isMainRequest()) {
             return;
         }
 
-        if (!$reflMethod = $this->createReflectionMethod($event->getController())) {
+        if (!$reflMethod = $this->createReflectionMethod($eventArgs->getController())) {
             return;
         }
 
@@ -50,13 +39,14 @@ class AnnotationListener
             AccessControl::class => 'onAccessControlAnnotation',
             RequestContent::class => 'onRequestContentAnnotation',
         ] as $class => $listener) {
-            if (!$annotation = $this->reader->getMethodAnnotation($reflMethod, $class)) {
-                continue;
+            if ($attributes = $reflMethod->getAttributes($class, \ReflectionAttribute::IS_INSTANCEOF)) {
+                /** @var \ReflectionAttribute $attribute */
+                foreach ($attributes as $attribute) {
+                    $this->$listener($eventArgs, $attribute->newInstance());
+                }
             }
 
-            $this->$listener($event, $annotation);
-
-            if (true === $event->isPropagationStopped()) {
+            if (true === $eventArgs->isPropagationStopped()) {
                 return;
             }
         }
@@ -117,9 +107,9 @@ class AnnotationListener
             $requestContent = $request->query->all();
         } else {
             if (false === empty($annotation->getFormats())) {
-                if (false === ($key = array_search($request->getContentType(), $annotation->getFormats()))) {
+                if (false === ($key = array_search($request->getContentTypeFormat(), $annotation->getFormats()))) {
                     $event->setController(function (Request $request) {
-                        throw new UnsupportedMediaTypeHttpException($this->translator->trans('request.format.unsupported', ['%format%' => $request->getContentType()], 'OkaInputHandlerBundle'));
+                        throw new UnsupportedMediaTypeHttpException($this->translator->trans('request.format.unsupported', ['%format%' => $request->getContentTypeFormat()], 'OkaInputHandlerBundle'));
                     });
                     $event->stopPropagation();
 
@@ -127,33 +117,9 @@ class AnnotationListener
                 }
 
                 $requestContent = RequestUtil::getContentFromFormat($request, $annotation->getFormats()[$key]);
-            } elseif (null !== $request->getContentType()) {
-                $requestContent = RequestUtil::getContentFromFormat($request, $request->getContentType());
+            } elseif (null !== $request->getContentTypeFormat()) {
+                $requestContent = RequestUtil::getContentFromFormat($request, $request->getContentTypeFormat());
             }
-        }
-
-        if (null !== ($target = $annotation->getTarget())) {
-            switch (true) {
-                case class_exists($target):
-                    $target = new $target();
-                    break;
-
-                case $request->attributes->has($target):
-                    $target = $request->attributes->get($target);
-                    break;
-
-                default:
-                    throw new \InvalidArgumentException(sprintf('The target argument is not valid for "@%s" nnotation.', get_class($annotation), $annotation->getTarget()));
-            }
-
-            $fieldsAlias = $annotation->getFieldsAlias();
-            $propertyAccessor = PropertyAccess::createPropertyAccessor();
-
-            foreach ($requestContent as $propertyPath => $value) {
-                $propertyAccessor->setValue($target, $fieldsAlias[$propertyPath] ?? $propertyPath, $value);
-            }
-
-            $requestContent = $target;
         }
 
         $errors = null;
@@ -183,7 +149,7 @@ class AnnotationListener
         }
 
         if (false === $validationHasFailed || true === $annotation->isValidationDisabled()) {
-            $request->attributes->set($annotation->getTargetAttributeName() ?? 'requestContent', $requestContent ?? []);
+            $request->attributes->set('requestContent', $requestContent ?? []);
         } else {
             $event->setController(function (Request $request) use ($annotation, $errors) {
                 $violation = $annotation->getViolation();

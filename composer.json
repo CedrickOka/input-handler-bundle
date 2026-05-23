@@ -1,66 +1,64 @@
 {
-	"name" : "coka/input-handler-bundle",
-	"type" : "symfony-bundle",
-	"license" : "MIT",
-	"description" : "Validator custom constraint",
-	"homepage" : "https://github.com/CedrickOka/input-handler-bundle",
-	"keywords" : [
-		"input",
-		"validation",
-		"content",
-		"negotiation"
-	],
-	"authors" : [{
-			"name" : "Cedrick Oka Baidai",
-			"email" : "okacedrick@gmail.com"
-		}
-	],
-	"autoload" : {
-		"psr-4" : {
-			"Oka\\InputHandlerBundle\\" : "src/"
-		},
-		"exclude-from-classmap" : [
-			"/tests/"
-		]
-	},
-	"autoload-dev" : {
-		"psr-4" : {
-			"Oka\\InputHandlerBundle\\Tests\\" : "tests/"
-		}
-	},
-	"require" : {
-		"php": ">=7.4",
-		"doctrine/annotations": "^1.11",
-		"doctrine/cache": "^2.2",
-		"symfony/dependency-injection": "^4.4 || ^5.4",
-		"symfony/http-kernel": "^4.4 || ^5.4",
-		"symfony/property-access": "^4.4 || ^5.4",
-		"symfony/serializer": "^4.4 || ^5.4",
-		"symfony/translation": "^4.4 || ^5.4",
-		"symfony/validator": "^4.4 || ^5.4"
-	},
-	"require-dev" : {
-		"friendsofphp/php-cs-fixer" : "^3",
-		"symfony/browser-kit" : "^4.4 || ^5.4",
-		"symfony/framework-bundle" : "^4.4 || ^5.4",
-		"symfony/phpunit-bridge" : "^4.4 || ^5.4",
-		"symfony/yaml" : "^4.4 || ^5.4"
-	},
-	"config" : {
-		"sort-packages" : true
-	},
-	"scripts" : {
-		"php-cs-fixer" : "php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation --using-cache=no"
-	},
-	"extra" : {
-		"branch-alias" : {
-			"dev-master" : "1.x-dev"
-		},
-		"symfony" : {
-			"allow-contrib" : "true"
-		}
-	},
-	"support" : {
-		"docs" : "https://github.com/CedrickOka/input-handler-bundle/blob/master/docs/index.md"
-	}
+    "name" : "coka/input-handler-bundle",
+    "type" : "symfony-bundle",
+    "license" : "MIT",
+    "description" : "Validator custom constraint",
+    "homepage" : "https://github.com/CedrickOka/input-handler-bundle",
+    "keywords" : [
+        "input",
+        "validation",
+        "content",
+        "negotiation"
+    ],
+    "authors" : [{
+            "name" : "Cedrick Oka Baidai",
+            "email" : "okacedrick@gmail.com"
+        }
+    ],
+    "autoload" : {
+        "psr-4" : {
+            "Oka\\InputHandlerBundle\\" : "src/"
+        },
+        "exclude-from-classmap" : [
+            "/tests/"
+        ]
+    },
+    "autoload-dev" : {
+        "psr-4" : {
+            "Oka\\InputHandlerBundle\\Tests\\" : "tests/"
+        }
+    },
+    "require" : {
+        "php": ">=7.4",
+        "symfony/dependency-injection": "^5.4 || ^6.4 || ^7.4",
+        "symfony/http-kernel": "^5.4 || ^6.4 || ^7.4",
+        "symfony/property-access": "^5.4 || ^6.4 || ^7.4",
+        "symfony/serializer": "^5.4 || ^6.4 || ^7.4",
+        "symfony/translation": "^5.4 || ^6.4 || ^7.4",
+        "symfony/validator": "^5.4 || ^6.4 || ^7.4"
+    },
+    "require-dev" : {
+        "friendsofphp/php-cs-fixer" : "^3",
+        "symfony/browser-kit" : "^5.4 || ^6.4 || ^7.4",
+        "symfony/framework-bundle" : "^5.4 || ^6.4 || ^7.4",
+        "symfony/phpunit-bridge" : "^5.4 || ^6.4 || ^7.4",
+        "symfony/yaml" : "^5.4 || ^6.4 || ^7.4"
+    },
+    "config" : {
+        "sort-packages" : true
+    },
+    "scripts" : {
+        "php-cs-fixer" : "php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation --using-cache=no"
+    },
+    "extra" : {
+        "branch-alias" : {
+            "dev-master" : "1.x-dev"
+        },
+        "symfony" : {
+            "allow-contrib" : "true"
+        }
+    },
+    "support" : {
+        "docs" : "https://github.com/CedrickOka/input-handler-bundle/blob/master/docs/index.md"
+    }
 }

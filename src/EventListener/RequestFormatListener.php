@@ -9,20 +9,17 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
  */
 class RequestFormatListener
 {
-    private $defaultFormat;
-
-    public function __construct(string $defaultFormat)
+    public function __construct(private ?string $defaultFormat = null)
     {
-        $this->defaultFormat = $defaultFormat;
     }
 
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $eventArgs)
     {
-        if (false === $event->isMasterRequest()) {
+        if (false === $eventArgs->isMainRequest()) {
             return;
         }
 
-        $request = $event->getRequest();
+        $request = $eventArgs->getRequest();
 
         if (null !== $request->getRequestFormat(null)) {
             return;

@@ -11,16 +11,11 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class ErrorResponseFactory
 {
-    private $requestStack;
-    private $serializer;
-
-    public function __construct(RequestStack $requestStack, SerializerInterface $serializer)
+    public function __construct(private RequestStack $requestStack, private SerializerInterface $serializer)
     {
-        $this->requestStack = $requestStack;
-        $this->serializer = $serializer;
     }
 
-    public function create($error, int $statusCode, string $format = null, array $context = []): Response
+    public function create($error, int $statusCode, ?string $format = null, array $context = []): Response
     {
         $mimeType = null;
 

@@ -36,6 +36,7 @@ class AppControllerTest extends WebTestCase
 
     /**
      * @covers
+     *
      * @depends testCheck
      */
     public function testCreate()
@@ -61,13 +62,14 @@ class AppControllerTest extends WebTestCase
 
     /**
      * @covers
+     *
      * @depends testCreate
      */
     public function testUpdate()
     {
         $client = static::createClient();
         $client->request(
-            'POST',
+            'PUT',
             '/v1/rest/update',
             [],
             [],
@@ -87,6 +89,7 @@ class AppControllerTest extends WebTestCase
 
     /**
      * @covers
+     *
      * @depends testUpdate
      */
     public function testThatRequestIsNoAcceptable()
@@ -110,6 +113,7 @@ class AppControllerTest extends WebTestCase
 
     /**
      * @covers
+     *
      * @depends testThatRequestIsNoAcceptable
      */
     public function testThatRequestIsNoValid()
@@ -135,6 +139,7 @@ class AppControllerTest extends WebTestCase
 
     /**
      * @covers
+     *
      * @depends testThatRequestIsNoValid
      */
     public function testThatProblemNormalizerIsOverride()

@@ -20,7 +20,7 @@ class ErrorResponseFactoryTest extends WebTestCase
         static::bootKernel();
 
         /** @var ErrorResponseFactory $errorResponseFactory */
-        $errorResponseFactory = static::$container->get('oka_input_handler.error_response.factory');
+        $errorResponseFactory = static::getContainer()->get('oka_input_handler.error_response.factory');
 
         $response = $errorResponseFactory->create(FlattenException::createFromThrowable(new \RuntimeException('Hello World!')), 400);
         $json = json_decode($response->getContent(), true);

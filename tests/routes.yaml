@@ -1,14 +1,14 @@
 check:
     methods: ['POST']
     path: /{version}/{protocol}/check
-    controller: Oka\InputHandlerBundle\Test\Controller\AppController::check
+    controller: Oka\InputHandlerBundle\Test\Controller\AppController::__invoke
 
 create:
     methods: ['POST']
     path: /{version}/{protocol}/create
-    controller: Oka\InputHandlerBundle\Test\Controller\AppController::create
+    controller: Oka\InputHandlerBundle\Test\Controller\AppController::__invoke
 
 update:
-    methods: ['POST']
+    methods: ['PUT']
     path: /{version}/{protocol}/update
-    controller: Oka\InputHandlerBundle\Test\Controller\AppController::update
+    controller: Oka\InputHandlerBundle\Test\Controller\AppController::__invoke

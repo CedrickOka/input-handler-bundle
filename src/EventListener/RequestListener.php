@@ -9,20 +9,17 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
  */
 class RequestListener
 {
-    private $formats;
-
-    public function __construct(array $formats = [])
+    public function __construct(private array $formats = [])
     {
-        $this->formats = $formats;
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $eventArgs)
     {
-        if (false === $event->isMasterRequest()) {
+        if (false === $eventArgs->isMainRequest()) {
             return;
         }
 
-        $request = $event->getRequest();
+        $request = $eventArgs->getRequest();
 
         foreach ($this->formats as $name => $value) {
             $request->setFormat($name, array_merge($request->getMimeTypes($name), $value['mime_types']));

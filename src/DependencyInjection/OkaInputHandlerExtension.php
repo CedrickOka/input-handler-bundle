@@ -8,7 +8,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\DependencyInjection\Parameter;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class OkaInputHandlerExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -33,7 +33,7 @@ class OkaInputHandlerExtension extends Extension
         }
 
         if (true === $config['error_handler']['override_problem_normalizer']) {
-            $problemNormalizerDefinition = $container->setDefinition('oka_input_handler.problem_normalizer', new Definition(ProblemNormalizer::class, [new Parameter('kernel.debug')]));
+            $problemNormalizerDefinition = $container->setDefinition('oka_input_handler.problem_normalizer', new Definition(ProblemNormalizer::class, [new Reference('serializer.normalizer.problem')]));
             $problemNormalizerDefinition->addTag('serializer.normalizer', ['priority' => 255]);
         }
     }
