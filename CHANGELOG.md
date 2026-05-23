@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+#### 2.0.0 (2025-05-23)
+
+* Added support for Symfony `6.4` and `7.4`.
+* Removed support for Symfony `4.4`.
+* Configured github actions
+
 #### 1.4.6 (2022-04-23)
 
 * Sanitize project.
