@@ -106,10 +106,12 @@ class AttributeListener
         if (true === $request->isMethodCacheable()) {
             $requestContent = $request->query->all();
         } else {
+            $contentTypeFormat = method_exists($request, 'getContentTypeFormat') ? $request->getContentTypeFormat() : $request->getContentType();
+
             if (false === empty($annotation->getFormats())) {
-                if (false === ($key = array_search($request->getContentTypeFormat(), $annotation->getFormats()))) {
-                    $event->setController(function (Request $request) {
-                        throw new UnsupportedMediaTypeHttpException($this->translator->trans('request.format.unsupported', ['%format%' => $request->getContentTypeFormat()], 'OkaInputHandlerBundle'));
+                if (false === ($key = array_search($contentTypeFormat, $annotation->getFormats()))) {
+                    $event->setController(function (Request $request) use ($contentTypeFormat) {
+                        throw new UnsupportedMediaTypeHttpException($this->translator->trans('request.format.unsupported', ['%format%' => $contentTypeFormat], 'OkaInputHandlerBundle'));
                     });
                     $event->stopPropagation();
 
@@ -117,8 +119,8 @@ class AttributeListener
                 }
 
                 $requestContent = RequestUtil::getContentFromFormat($request, $annotation->getFormats()[$key]);
-            } elseif (null !== $request->getContentTypeFormat()) {
-                $requestContent = RequestUtil::getContentFromFormat($request, $request->getContentTypeFormat());
+            } elseif (null !== $contentTypeFormat) {
+                $requestContent = RequestUtil::getContentFromFormat($request, $contentTypeFormat);
             }
         }
 
